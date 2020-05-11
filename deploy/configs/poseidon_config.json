@@ -4,6 +4,6 @@
   "kubeConfig":"/home/.kube/config_fromjson",
   "kubeVersion":"1.8",
   "statsServerAddress":"0.0.0.0:9091",
-  "schedulingInterval":10,
+  "schedulingInterval": 30,
   "firmamentPort":"9090"
 }

@@ -147,7 +147,7 @@ spec:
     spec:
       serviceAccountName: poseidon
       containers:
-      - command: [/poseidon, --logtostderr, --kubeConfig=, --kubeVersion=1.6]
+      - command: [/poseidon, --logtostderr, --kubeConfig=, --kubeVersion=1.15]
         image: huaweiposeidon/poseidon:latest
         name: poseidon
       initContainers:

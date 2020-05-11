@@ -42,9 +42,10 @@ func schedule(fc firmament.FirmamentSchedulerClient) {
 	// start the bond od wokers
 	go k8sclient.BindPodWorkers(stopCh, config.GetBurst())
 	for {
+		glog.Infof("poseidon::schedule: try to schedule deltas...")
 		deltas := firmament.Schedule(fc)
 
-		glog.Infof("Scheduler returned %d deltas", len(deltas.GetDeltas()))
+		glog.Infof("poseidon::schedule: Scheduler returned %d deltas", len(deltas.GetDeltas()))
 		if (len(deltas.GetUnscheduledTasks()) > 0) || (len(deltas.GetDeltas()) > 0) {
 			if k8sclient.ClientSet != nil {
 				go k8sclient.NewPoseidonEvents(k8sclient.ClientSet).ProcessEvents(deltas)

@@ -169,26 +169,40 @@ func (nw *NodeWatcher) enqueueNodeUpdate(key, oldObj, newObj interface{}) {
 	oldIsReady, oldIsOutOfDisk := nw.getReadyAndOutOfDiskConditions(oldNode)
 	newIsReady, newIsOutOfDisk := nw.getReadyAndOutOfDiskConditions(newNode)
 
+	glog.Infof("enqueueNodeUpdate(xuchangtiao): oldIsReady=%s, newIsReady=%s, oldIsOutOfDisk=%s, newIsOutOfDisk=%s", oldIsReady, newIsReady, oldIsOutOfDisk, newIsOutOfDisk)
 	if oldIsReady != newIsReady || oldIsOutOfDisk != newIsOutOfDisk {
+		glog.Info("enqueueNodeUpdate(xuchangtiao): oldIsReady != newIsReady || oldIsOutOfDisk != newIsOutOfDisk")
 		if newIsReady && !newIsOutOfDisk {
+			glog.Info("enqueueNodeUpdate(xuchangtiao): newIsReady && !newIsOutOfDisk is ture")
 			addedNode := nw.parseNode(newNode, NodeAdded)
 			nw.nodeWorkQueue.Add(key, addedNode)
 			glog.Info("enqueueNodeUpdate: Added node ", addedNode.Hostname)
 			return
 		}
+		glog.Info("enqueueNodeUpdate(xuchangtiao): newIsReady && !newIsOutOfDisk is false")
 		failedNode := nw.parseNode(newNode, NodeFailed)
 		nw.nodeWorkQueue.Add(key, failedNode)
 		glog.Info("enqueueNodeUpdate: Failed node ", failedNode.Hostname)
 		return
 	}
+	// add by xuchangtiao
+	if newIsReady == false && oldIsReady == false { //如果旧的和新的都是NotReady状态，表明这个node还是不需要放入流图中，则不需要更新
+		return
+	}
 	nodeUpdated := false
 	if !reflect.DeepEqual(oldNode.Labels, newNode.Labels) {
+		glog.Info("enqueueNodeUpdate(xuchangtiao): reflect.DeepEqual(oldNode.Labels, newNode.Labels)==false")
+		glog.Infof("enqueueNodeUpdate(xuchangtiao): oldNode.Labels=%s, newNode.Labels=%s", oldNode.Labels, newNode.Labels)
 		nodeUpdated = true
 	}
 	if !reflect.DeepEqual(oldNode.Annotations, newNode.Annotations) {
+		glog.Info("enqueueNodeUpdate(xuchangtiao): reflect.DeepEqual(oldNode.Annotations, newNode.Annotations)==false")
+		glog.Infof("enqueueNodeUpdate(xuchangtiao): oldNode.Annotations=%s, newNode.Annotations=%s", oldNode.Annotations, newNode.Annotations)
 		nodeUpdated = true
 	}
 	if !reflect.DeepEqual(oldNode.Spec.Taints, newNode.Spec.Taints) {
+		glog.Info("enqueueNodeUpdate(xuchangtiao): reflect.DeepEqual(oldNode.Spec.Taints, newNode.Spec.Taints)==false")
+		glog.Infof("enqueueNodeUpdate(xuchangtiao): oldNode.Spec.Taints=%s, newNode.Spec.Taints=%s", oldNode.Spec.Taints, newNode.Spec.Taints)
 		nodeUpdated = true
 	}
 	if nodeUpdated {

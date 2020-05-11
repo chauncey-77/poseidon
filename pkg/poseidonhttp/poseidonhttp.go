@@ -111,6 +111,7 @@ func Serve(fc firmament.FirmamentSchedulerClient) {
 	// addrMap is a map to store the port addrs, key is the port name and value is the ip:port
 	addrMap := make(map[string][]map[string]http.Handler)
 	addrMap[cfg.MetricsBindAddress] = append(addrMap[cfg.MetricsBindAddress], generateMetricsHandler())
+	glog.Infof("addrMap[cfg.MetricsBindAddress]", cfg.MetricsBindAddress, addrMap[cfg.MetricsBindAddress])
 
 	if cfg.EnablePprof {
 		glog.Infof("pprof is enabled under %s", config.GetPprofAddress()+debugutil.HTTPPrefixPProf)
@@ -122,6 +123,7 @@ func Serve(fc firmament.FirmamentSchedulerClient) {
 
 	// start http services
 	for addr, handlersList := range addrMap {
+		glog.Infof("startHttpServices", addr, handlersList)
 		go startHttpServices(addr, handlersList)
 	}
 }

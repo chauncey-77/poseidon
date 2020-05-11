@@ -166,7 +166,7 @@ func ReadFromCommandLineFlags() {
 	pflag.StringVar(&config.KubeConfig, "kubeConfig", "kubeconfig.cfg", "Path to the kubeconfig file")
 	pflag.StringVar(&config.KubeVersion, "kubeVersion", "1.6", "Kubernetes version")
 	pflag.StringVar(&config.StatsServerAddress, "statsServerAddress", "0.0.0.0:9091", "Address on which the stats server listens")
-	pflag.IntVar(&config.SchedulingInterval, "schedulingInterval", 10, "Time between scheduler runs (in seconds)")
+	pflag.IntVar(&config.SchedulingInterval, "schedulingInterval", 30, "Time between scheduler runs (in seconds)")
 	pflag.StringVar(&config.ConfigPath, "configPath", ".",
 		"The path to the config file (i.e poseidon_cfg) without filename or extension, supported extensions/formats are Yaml, Json")
 	flag.BoolVar(&config.EnablePprof, "enablePprof", false, "Enable runtime profiling data via HTTP server. Address is at client URL + \"/debug/pprof/\"")
