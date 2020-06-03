@@ -17,6 +17,7 @@ limitations under the License.
 package k8sclient
 
 import (
+	"github.com/golang/glog"
 	"sync"
 )
 
@@ -112,6 +113,7 @@ func (q *Type) Get() (key interface{}, items []interface{}, shutdown bool) {
 		// We must be shutting down.
 		return nil, nil, true
 	}
+	glog.Infof("poseidon::schedule: len(q.queue) = %d", len(q.queue))
 	key, q.queue = q.queue[0], q.queue[1:]
 	// Add key to the processing set.
 	q.processing.insert(key)

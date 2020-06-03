@@ -455,6 +455,7 @@ func (pw *PodWatcher) podWorker() {
 					pw.podWorkQueue.Done(key)
 					wg.Done()
 				}()
+				glog.Infof("poseidon::schedule: len(items) = %d", len(items))
 				for _, item := range items {
 					pod := item.(*Pod)
 					switch pod.State {
