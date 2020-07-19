@@ -27,7 +27,7 @@ spec:
           path: /var/log
       containers:
       - name: hollow-kubelet
-        image: xuhchangtiao/kubemark:latest # {{kubemark_image_registry}}/kubemark:{{kubemark_image_tag}}
+        image: xuchangtiao/kubemark:latest # {{kubemark_image_registry}}/kubemark:{{kubemark_image_tag}}
         ports:
         - containerPort: 4194
         - containerPort: 10250
@@ -59,7 +59,7 @@ spec:
         securityContext:
           privileged: true
       - name: hollow-proxy
-        image: xuhchangtiao/kubemark:latest # {{kubemark_image_registry}}/kubemark:{{kubemark_image_tag}}
+        image: xuchangtiao/kubemark:latest # {{kubemark_image_registry}}/kubemark:{{kubemark_image_tag}}
         imagePullPolicy: IfNotPresent
         env:
         - name: CONTENT_TYPE
