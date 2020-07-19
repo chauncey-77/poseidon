@@ -126,7 +126,7 @@ metadata:
   name: poseidon
   namespace: kube-system
 ---
-apiVersion: apps/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
@@ -136,6 +136,12 @@ metadata:
   name: poseidon
   namespace: kube-system
 spec:
+  selector:
+    matchLabels:
+      component: poseidon
+      tier: control-plane
+      version: first
+      poseidonservice: poseidon
   replicas: 1
   template:
     metadata:
@@ -148,7 +154,7 @@ spec:
       serviceAccountName: poseidon
       containers:
       - command: [/poseidon, --logtostderr, --kubeConfig=, --kubeVersion=1.15]
-        image: huaweiposeidon/poseidon:latest
+        image: xuchangtiao/poseidon:dev
         name: poseidon
       initContainers:
       - name: init-firmamentservice

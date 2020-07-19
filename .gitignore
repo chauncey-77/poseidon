@@ -1,3 +1,5 @@
+cmd/poseidon/poseidon
+deploy/poseidon
 # Compiled Object files, Static and Dynamic libs (Shared Objects)
 *.o
 *.a
